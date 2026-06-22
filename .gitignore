@@ -1,0 +1,23 @@
+*.egg-info/
+dist/
+build/
+__pycache__/
+*.pyc
+.pytest_cache/
+mempal.yaml
+
+# === SENSITIVE CONTENT FIREWALL ===
+# Marketing drafts (LinkedIn / blog / press) are never committed to the public repo.
+# They stay in the publisher's local working directory.
+LINKEDIN_*.md
+LINKEDIN_*.docx
+*_DRAFT.md
+*_DRAFT.docx
+*_PRIVATE.md
+
+# macOS / editor noise
+.DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/

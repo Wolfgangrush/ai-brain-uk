@@ -1,0 +1,67 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ailawfirm_uk"
+version = "0.1.0"
+description = "AI Brain — UK Solo edition. Practice OS for UK solo solicitors and barristers. Built on local memory architecture."
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+authors = [
+    {name = "Rushikesh R. Mahajan", email = "advrushikeshravindramahajan@gmail.com"},
+]
+keywords = [
+    "ai", "memory", "llm", "rag", "chromadb", "mcp",
+    "vector-database", "claude", "chatgpt", "embeddings",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Utilities",
+]
+dependencies = [
+    "chromadb>=0.4.0",
+    "pyyaml>=6.0",
+    "icalendar>=5.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/Wolfgangrush/ai-law-firm-uk"
+Repository = "https://github.com/Wolfgangrush/ai-law-firm-uk"
+"Bug Tracker" = "https://github.com/Wolfgangrush/ai-law-firm-uk/issues"
+"Upstream Engine" = "https://github.com/Wolfgangrush"
+
+[tool.setuptools.packages.find]
+include = ["ailawfirm_uk*"]
+
+[tool.setuptools.package-data]
+ailawfirm_uk = ["templates/*.md", "templates/*.toml"]
+
+[project.scripts]
+ailawfirm-uk = "ailawfirm_uk:main"
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0", "build>=1.0", "twine>=4.0"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "W"]
+ignore = ["E501"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
