@@ -35,6 +35,14 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass, field
 
+from ._pii_validators import (
+    aadhaar_validate,
+    gstin_validate,
+    iban_validate,
+    itin_validate,
+    nric_validate,
+)
+
 
 @dataclass
 class TokenMap:
@@ -61,13 +69,13 @@ class TokenMap:
 # ─────────────────────────────────────────────────────────────────────────
 
 # Aadhaar: 12 digits, optionally space-separated as 4-4-4
-AADHAAR_RE = re.compile(r"\b\d{4}\s?\d{4}\s?\d{4}\b")
+AADHAAR_RE = re.compile(r"\b[2-9]\d{3}\s?\d{4}\s?\d{4}\b")
 
 # PAN: 5 alphabets + 4 digits + 1 alphabet (e.g. ABCDE1234F)
-PAN_RE = re.compile(r"\b[A-Z]{5}\d{4}[A-Z]\b")
+PAN_RE = re.compile(r"\b[A-Z]{3}[ABCFGHJLPT][A-Z]\d{4}[A-Z]\b")
 
 # GSTIN: 2-digit state code + PAN + 1 entity number + Z + checksum
-GSTIN_RE = re.compile(r"\b\d{2}[A-Z]{5}\d{4}[A-Z]\d[A-Z][A-Z\d]\b")
+GSTIN_RE = re.compile(r"\b\d{2}[A-Z]{3}[ABCFGHJLPT][A-Z]\d{4}[A-Z][0-9A-Z]Z[0-9A-Z]\b")
 
 # Indian phone: +91 prefix optional, 10 digits starting 6-9
 PHONE_RE = re.compile(r"(?:\+91[\s-]?)?[6-9]\d{9}\b")
@@ -76,7 +84,7 @@ PHONE_RE = re.compile(r"(?:\+91[\s-]?)?[6-9]\d{9}\b")
 EMAIL_RE = re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b")
 
 # Currency amounts (Indian context): ₹ + digits with Indian grouping or numeric
-AMOUNT_RE = re.compile(r"(?:₹|Rs\.?|INR)\s?\d{1,3}(?:,\d{2,3})*(?:\.\d+)?\b")
+AMOUNT_RE = re.compile(r"\(?-?\s?(?:₹|Rs\.?|INR)\s?-?\d{1,3}(?:,\d{2,3})*(?:\.\d+)?\)?")
 
 # Dates in common Indian formats: DD-MM-YYYY · DD/MM/YYYY · DD.MM.YYYY · DD-MMM-YYYY · DD Month YYYY
 DATE_RE = re.compile(
@@ -104,6 +112,9 @@ IFSC_RE = re.compile(r"\b[A-Z]{4}0[A-Z\d]{6}\b")
 # Vehicle registration (Indian format): SS-NN-XX-NNNN  e.g. MH-12-AB-1234
 VEHICLE_REG_RE = re.compile(r"\b[A-Z]{2}[\s-]?\d{1,2}[\s-]?[A-Z]{1,2}[\s-]?\d{4}\b")
 
+# Bharat (BH) series — YY BH NNNN XX (e.g. "22 BH 1234 AB")
+BH_VEHICLE_RE = re.compile(r"\b\d{2}[\s-]?BH[\s-]?\d{4}[\s-]?[A-Z]{1,2}\b")
+
 # ─────────────────────────────────────────────────────────────────────────
 # UK-native PII patterns (added v0.1.1 for jurisdictional coverage)
 # ─────────────────────────────────────────────────────────────────────────
@@ -124,7 +135,7 @@ UK_VAT_RE = re.compile(r"\bGB\d{9}(?:\d{3})?\b")
 UK_PHONE_RE = re.compile(r"(?:\+?44[\s-]?)?(?:0?(?:7\d{3}|[12]\d{3}))[\s-]?\d{3}[\s-]?\d{3}\b")
 
 # GBP amounts: £
-GBP_AMOUNT_RE = re.compile(r"£\s?\d{1,3}(?:,\d{3})*(?:\.\d+)?\b")
+GBP_AMOUNT_RE = re.compile(r"\(?-?\s?£\s?-?\d{1,3}(?:,\d{3})*(?:\.\d+)?\)?")
 
 # UK case numbers: [YYYY] EWHC/EWCA/UKSC NNN (Civ/Crim/Comm/etc)
 UK_CASE_RE = re.compile(
@@ -299,18 +310,19 @@ class PseudonymisationGateway:
             (NHS_NUMBER_RE, "NHS_NUMBER"),
             (UTR_RE, "UTR"),
             (UK_VAT_RE, "UK_VAT"),
-            (UK_IBAN_RE, "UK_IBAN"),
+            (UK_IBAN_RE, "UK_IBAN", iban_validate),
             (UK_CASE_RE, "UK_CASE"),
             (UK_PHONE_RE, "UK_PHONE"),
             (GBP_AMOUNT_RE, "GBP_AMOUNT"),
             # Indian diaspora coverage (legitimate for South Asian diaspora client matters)
-            (AADHAAR_RE, "AADHAAR"),
+            (AADHAAR_RE, "AADHAAR", aadhaar_validate),
             (PAN_RE, "PAN"),
-            (GSTIN_RE, "GSTIN"),
+            (GSTIN_RE, "GSTIN", gstin_validate),
             (IFSC_RE, "IFSC"),
             (FIR_RE, "FIR_NO"),
             (CASE_NO_RE, "CASE_NO"),
             (VEHICLE_REG_RE, "VEHICLE"),
+            (BH_VEHICLE_RE, "VEHICLE"),
             (BANK_ACCT_RE, "BANK_ACCT"),
             (EMAIL_RE, "EMAIL"),
             (PHONE_RE, "PHONE"),
@@ -328,10 +340,13 @@ class PseudonymisationGateway:
         token_map = TokenMap()
         out = text
         # Apply each pattern in order; replace longest-first within a pattern
-        for pattern, entity_type in self.patterns:
+        for entry in self.patterns:
+            pattern, entity_type, validator = (tuple(entry) + (None,))[:3]
             matches = list(pattern.finditer(out))
             # Walk matches in reverse so position offsets don't break
             for m in reversed(matches):
+                if validator is not None and not validator(m.group(0)):
+                    continue
                 original = m.group(0)
                 # For NAME_RE we capture the name group, not the honorific
                 if entity_type == "PERSON" and m.lastindex:
@@ -358,11 +373,11 @@ class PseudonymisationGateway:
         Returns (is_safe, list_of_detected_categories).
         """
         detected = []
-        if AADHAAR_RE.search(text):
+        if any(aadhaar_validate(m.group(0)) for m in AADHAAR_RE.finditer(text)):
             detected.append("AADHAAR")
         if PAN_RE.search(text):
             detected.append("PAN")
-        if GSTIN_RE.search(text):
+        if any(gstin_validate(m.group(0)) for m in GSTIN_RE.finditer(text)):
             detected.append("GSTIN")
         if NAME_RE.search(text):
             detected.append("PERSON")
