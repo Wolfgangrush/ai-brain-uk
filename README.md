@@ -1,3 +1,18 @@
+<div align="center">
+
+<img src="docs/banner.png" width="820"/>
+
+**AI Brain for UK Lawyers — a local-first practice brain for UK attorneys**
+
+Visit the live site: [wolfgangrush.github.io](https://wolfgangrush.github.io)
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Local First](https://img.shields.io/badge/local--first-privacy--first-green)](#)
+[![Legal Tech](https://img.shields.io/badge/legal--tech-uk-blueviolet)](#)
+
+</div>
+
+
 # 🇬🇧 AI Brain for UK Lawyers
 
 > **Free practice OS for every UK solo solicitor, barrister, advocate (Scotland), CILEx-regulated practitioner, and in-house counsel. Terminal-native. Local-first by default (Ollama + Qwen3 — nothing leaves your laptop). Cloud-LLM optional with the [Pseudonymisation Gateway](https://github.com/Wolfgangrush/pseudonymisation-gateway) sanitising PII before any prompt leaves the machine.**
