@@ -161,6 +161,7 @@ def cmd_status(args):
 # AI-backed specialist answer) and are the entry points the front desk
 # describes in CLAUDE.md / AGENTS.md / ROUTING_CONTRACT.md.
 
+
 def cmd_ask(args):
     """One-shot: send a query through the brain and print the answer."""
     from .brain.repl import run_ask
