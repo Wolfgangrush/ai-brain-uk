@@ -1,29 +1,23 @@
 #!/usr/bin/env python3
 """
-Brain — Give your AI a memory. No API key required.
+Brain — the terminal front door to the AI Law Brain (UK · England & Wales).
 
-Two ways to ingest:
-  Projects:      brain mine ~/projects/my_app          (code, docs, notes)
-  Conversations: brain mine ~/chats/ --mode convos     (Claude, ChatGPT, Slack)
-
-Same palace. Same search. Different ingest strategies.
+Talk to the brain; it classifies each query and routes it to the right
+specialist (citation · court · drafting · deadline · compliance · matter · calendar).
 
 Commands:
-    brain init <dir>                  Detect rooms from folder structure
-    brain split <dir>                 Split concatenated mega-files into per-session files
-    brain mine <dir>                  Mine project files (default)
-    brain mine <dir> --mode convos    Mine conversation exports
-    brain search "query"              Find anything, exact words
-    brain wake-up                     Show L0 + L1 wake-up context
-    brain wake-up --wing my_app       Wake-up for a specific project
-    brain status                      Show what's been filed
+    ailawfirm-uk reception            Turn it on: greet, verify specialists, load memory, show recap
+    ailawfirm-uk ask "<question>"     One-shot — route a single question to the right specialist
+    ailawfirm-uk chat                 Interactive session — every line is routed for you
+    ailawfirm-uk recap                Show the retrospective memory of recent sessions
+    ailawfirm-uk mine <dir>           File project files / conversation exports into the palace
 
 Examples:
-    brain init ~/projects/my_app
-    brain mine ~/projects/my_app
-    brain mine ~/chats/claude-sessions --mode convos
-    brain search "why did we switch to GraphQL"
-    brain search "pricing discussion" --wing my_app --room costs
+    ailawfirm-uk reception
+    ailawfirm-uk ask "limitation for breach of contract filed 12 Jan 2026"
+    ailawfirm-uk ask "which court has jurisdiction over my matter"
+    ailawfirm-uk chat
+    ailawfirm-uk mine ~/chats/claude-sessions --mode convos
 """
 
 import os
@@ -216,7 +210,7 @@ def cmd_compress(args):
     # Connect to palace
     try:
         client = chromadb.PersistentClient(path=palace_path)
-        col = client.get_collection("ailawfirm_uk_drawers")
+        col = client.get_collection(BrainConfig().collection_name)
     except Exception:
         print(f"\n  No palace found at {palace_path}")
         print("  Run: brain init <dir> then brain mine <dir>")
@@ -446,7 +440,7 @@ def main():
     if not args.command:
         print(
             "═══════════════════════════════════════════════════════════════════\n"
-            "  AI Brain for UK Lawyers · v0.1\n"
+            "  AI Brain for UK Lawyers · 2.0.0\n"
             "\n"
             "  🙏 Welcome, solicitor / barrister\n"
             "  Croeso (Cymraeg) · Fàilte (Gàidhlig) · Fáilte (Gaeilge)\n"

@@ -57,6 +57,23 @@ def _no_palace():
     }
 
 
+def _drawer_metadatas(col, wing: str = None):
+    """Fetch all drawer metadatas, optionally filtered by wing.
+
+    Centralises the read + error handling that the status/list/taxonomy tools
+    all share. On failure it logs the exception and returns an empty list rather
+    than silently swallowing it.
+    """
+    try:
+        kwargs = {"include": ["metadatas"]}
+        if wing:
+            kwargs["where"] = {"wing": wing}
+        return col.get(**kwargs)["metadatas"]
+    except Exception as e:
+        logger.warning("Failed to read drawer metadata (wing=%s): %s", wing, e)
+        return []
+
+
 # ==================== READ TOOLS ====================
 
 
@@ -67,15 +84,11 @@ def tool_status():
     count = col.count()
     wings = {}
     rooms = {}
-    try:
-        all_meta = col.get(include=["metadatas"])["metadatas"]
-        for m in all_meta:
-            w = m.get("wing", "unknown")
-            r = m.get("room", "unknown")
-            wings[w] = wings.get(w, 0) + 1
-            rooms[r] = rooms.get(r, 0) + 1
-    except Exception:
-        pass
+    for m in _drawer_metadatas(col):
+        w = m.get("wing", "unknown")
+        r = m.get("room", "unknown")
+        wings[w] = wings.get(w, 0) + 1
+        rooms[r] = rooms.get(r, 0) + 1
     return {
         "total_drawers": count,
         "wings": wings,
@@ -124,13 +137,9 @@ def tool_list_wings():
     if not col:
         return _no_palace()
     wings = {}
-    try:
-        all_meta = col.get(include=["metadatas"])["metadatas"]
-        for m in all_meta:
-            w = m.get("wing", "unknown")
-            wings[w] = wings.get(w, 0) + 1
-    except Exception:
-        pass
+    for m in _drawer_metadatas(col):
+        w = m.get("wing", "unknown")
+        wings[w] = wings.get(w, 0) + 1
     return {"wings": wings}
 
 
@@ -139,16 +148,9 @@ def tool_list_rooms(wing: str = None):
     if not col:
         return _no_palace()
     rooms = {}
-    try:
-        kwargs = {"include": ["metadatas"]}
-        if wing:
-            kwargs["where"] = {"wing": wing}
-        all_meta = col.get(**kwargs)["metadatas"]
-        for m in all_meta:
-            r = m.get("room", "unknown")
-            rooms[r] = rooms.get(r, 0) + 1
-    except Exception:
-        pass
+    for m in _drawer_metadatas(col, wing=wing):
+        r = m.get("room", "unknown")
+        rooms[r] = rooms.get(r, 0) + 1
     return {"wing": wing or "all", "rooms": rooms}
 
 
@@ -157,16 +159,12 @@ def tool_get_taxonomy():
     if not col:
         return _no_palace()
     taxonomy = {}
-    try:
-        all_meta = col.get(include=["metadatas"])["metadatas"]
-        for m in all_meta:
-            w = m.get("wing", "unknown")
-            r = m.get("room", "unknown")
-            if w not in taxonomy:
-                taxonomy[w] = {}
-            taxonomy[w][r] = taxonomy[w].get(r, 0) + 1
-    except Exception:
-        pass
+    for m in _drawer_metadatas(col):
+        w = m.get("wing", "unknown")
+        r = m.get("room", "unknown")
+        if w not in taxonomy:
+            taxonomy[w] = {}
+        taxonomy[w][r] = taxonomy[w].get(r, 0) + 1
     return {"taxonomy": taxonomy}
 
 
