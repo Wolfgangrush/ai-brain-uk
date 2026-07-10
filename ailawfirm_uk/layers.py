@@ -92,7 +92,7 @@ class Layer1:
         """Pull top drawers from ChromaDB and format as compact L1 text."""
         try:
             client = chromadb.PersistentClient(path=self.palace_path)
-            col = client.get_collection("ailawfirm_uk_drawers")
+            col = client.get_collection(BrainConfig().collection_name)
         except Exception:
             return "## L1 — No palace found. Run: brain mine <dir>"
 
@@ -188,7 +188,7 @@ class Layer2:
         """Retrieve drawers filtered by wing and/or room."""
         try:
             client = chromadb.PersistentClient(path=self.palace_path)
-            col = client.get_collection("ailawfirm_uk_drawers")
+            col = client.get_collection(BrainConfig().collection_name)
         except Exception:
             return "No palace found."
 
@@ -252,7 +252,7 @@ class Layer3:
         """Semantic search, returns compact result text."""
         try:
             client = chromadb.PersistentClient(path=self.palace_path)
-            col = client.get_collection("ailawfirm_uk_drawers")
+            col = client.get_collection(BrainConfig().collection_name)
         except Exception:
             return "No palace found."
 
@@ -308,7 +308,7 @@ class Layer3:
         """Return raw dicts instead of formatted text."""
         try:
             client = chromadb.PersistentClient(path=self.palace_path)
-            col = client.get_collection("ailawfirm_uk_drawers")
+            col = client.get_collection(BrainConfig().collection_name)
         except Exception:
             return []
 
@@ -429,7 +429,7 @@ class MemoryStack:
         # Count drawers
         try:
             client = chromadb.PersistentClient(path=self.palace_path)
-            col = client.get_collection("ailawfirm_uk_drawers")
+            col = client.get_collection(BrainConfig().collection_name)
             count = col.count()
             result["total_drawers"] = count
         except Exception:

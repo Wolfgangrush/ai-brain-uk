@@ -16,6 +16,8 @@ from collections import defaultdict
 
 import chromadb
 
+from .config import BrainConfig
+
 READABLE_EXTENSIONS = {
     ".txt",
     ".md",
@@ -183,10 +185,11 @@ def chunk_text(content: str, source_file: str) -> list:
 def get_collection(palace_path: str):
     os.makedirs(palace_path, exist_ok=True)
     client = chromadb.PersistentClient(path=palace_path)
+    collection_name = BrainConfig().collection_name
     try:
-        return client.get_collection("ailawfirm_uk_drawers")
+        return client.get_collection(collection_name)
     except Exception:
-        return client.create_collection("ailawfirm_uk_drawers")
+        return client.create_collection(collection_name)
 
 
 def file_already_mined(collection, source_file: str) -> bool:
@@ -392,7 +395,7 @@ def status(palace_path: str):
     """Show what's been filed in the palace."""
     try:
         client = chromadb.PersistentClient(path=palace_path)
-        col = client.get_collection("ailawfirm_uk_drawers")
+        col = client.get_collection(BrainConfig().collection_name)
     except Exception:
         print(f"\n  No palace found at {palace_path}")
         print("  Run: brain init <dir> then brain mine <dir>")

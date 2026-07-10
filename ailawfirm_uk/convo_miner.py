@@ -17,6 +17,7 @@ from collections import defaultdict
 
 import chromadb
 
+from .config import BrainConfig
 from .normalize import normalize
 
 
@@ -212,10 +213,11 @@ def detect_convo_room(content: str) -> str:
 def get_collection(palace_path: str):
     os.makedirs(palace_path, exist_ok=True)
     client = chromadb.PersistentClient(path=palace_path)
+    collection_name = BrainConfig().collection_name
     try:
-        return client.get_collection("ailawfirm_uk_drawers")
+        return client.get_collection(collection_name)
     except Exception:
-        return client.create_collection("ailawfirm_uk_drawers")
+        return client.create_collection(collection_name)
 
 
 def file_already_mined(collection, source_file: str) -> bool:
