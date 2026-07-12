@@ -6,10 +6,10 @@
 
 ### 1. Every drafted document ships as .md AND .docx — paired, atomically
 
-For every legal document this firm produces — complaint, petition, affidavit, reply, plaint, notice, advisory, sale-deed analysis, opinion, tax form, ANY draft — produce BOTH a markdown file AND a Word file in the same directory, in the same tool call window.
+For every legal document this firm produces — claim form, particulars of claim, defence, witness statement, application notice, skeleton argument, advice/opinion, ANY draft — produce BOTH a markdown file AND a Word file in the same directory, in the same tool call window.
 
 - Markdown is for the firm: search, diff, version-control, audit.
-- Word is for the registry and the client: courts accept .docx, clients open .docx.
+- Word is for the court and the client: courts accept .docx, clients open .docx.
 - Markdown-only = unfileable + unsendable.
 - Word-only = opaque to the firm's brain.
 
@@ -22,7 +22,7 @@ If pandoc is not installed, install it:
 
 ### 2. Client data stays local
 
-Nothing about a matter, a client, or a draft leaves this laptop unless the advocate explicitly chooses to send it. No automatic uploads to cloud LLMs. No telemetry. If the advocate wires a cloud model (DeepSeek / Claude API / Gemini API), the advocate decides per-conversation what gets sent.
+Nothing about a matter, a client, or a draft leaves this laptop unless the solicitor explicitly chooses to send it. No automatic uploads to cloud LLMs. No telemetry. If the solicitor wires a cloud model (DeepSeek / Claude API / Gemini API), the solicitor decides per-conversation what gets sent.
 
 ### 3. BCI Rule 36 firewall
 
@@ -30,7 +30,7 @@ Before publishing or sending anything to the public — LinkedIn post, website c
 
 ### 4. Citations get checked, never invented
 
-If you cite AIR / SCC / SCC OnLine / a <your-court> judgment / any case — run the `/citation` command to validate the format first. The firm does NOT invent citations. A single hallucinated authority is career-threatening (multiple UK HCs have cautioned advocates).
+If you cite a UK authority ([2019] UKSC 41, [2020] EWCA Civ, [2021] EWHC (Ch), or a Law Report) / any case — run the `/citation` command to validate the format first. The firm does NOT invent citations. A single hallucinated authority is career-threatening (UK courts have cautioned solicitors and counsel).
 
 ### 5. Matter folders follow this layout
 
@@ -59,7 +59,7 @@ After updating, this `CLAUDE.md` file is NOT overwritten (it's your firm's custo
 ## ✍️ Your firm's details
 
 - **Firm name:** <FIRM_NAME>
-- **Principal advocate:** <ADVOCATE_NAME>
+- **Principal solicitor:** <ADVOCATE_NAME>
 - **Bar Council enrolment:** <ENROLMENT_NO>
 - **Practice location:** <CITY, STATE>
 - **Practice focus:** <PRACTICE_AREAS>
@@ -71,6 +71,6 @@ After updating, this `CLAUDE.md` file is NOT overwritten (it's your firm's custo
 
 Add your own rules below. They survive `ailawfirm-uk update`.
 
-- (e.g., "Always check if the matter is in JMFC the local court — that bench requires 3 hard copies for filing")
+- (e.g., "Check the court's local practice direction for bundle and filing requirements")
 - (e.g., "For sale deed analysis, ALWAYS fetch the 7/12 extract before reporting on ownership status")
 - (e.g., "Bail applications need the FIR copy attached as Annexure A by default")

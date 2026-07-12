@@ -32,6 +32,7 @@ Usage:
 
 from __future__ import annotations
 
+import hashlib
 import re
 from dataclasses import dataclass, field
 
@@ -136,6 +137,9 @@ UK_PHONE_RE = re.compile(r"(?:\+?44[\s-]?)?(?:0?(?:7\d{3}|[12]\d{3}))[\s-]?\d{3}
 GBP_AMOUNT_RE = re.compile(r"\(?-?\s?£\s?-?\d{1,3}(?:,\d{3})*(?:\.\d+)?\)?")
 
 # UK case numbers: [YYYY] EWHC/EWCA/UKSC NNN (Civ/Crim/Comm/etc)
+# UK postcode: e.g. SW1A 2AA, M1 1AA, EC1A 1BB
+UK_POSTCODE_RE = re.compile(r"\b[A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2}\b")
+
 UK_CASE_RE = re.compile(
     r"\[?\d{4}\]?\s+(?:EWHC|EWCA|UKSC|UKHL)\s+(?:Civ|Crim|Comm|Admin|Fam|TCC|Ch|QB)?\s*\d{1,4}",
     re.IGNORECASE,
@@ -172,6 +176,30 @@ HONORIFICS = {
 NAME_RE = re.compile(
     r"\b(?:" + "|".join(HONORIFICS) + r")\.?\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,3})\b"
 )
+
+# Context-anchored client / party name detection — catches the dominant real-world
+# forms a US attorney types even WITHOUT an honorific ("my client Maria Gonzalez",
+# "represent John Doe", "Smith v. Jones", "Jane Roe, executor"). High-precision
+# anchors keep false positives low. NOTE: this does NOT catch a bare, un-anchored
+# arbitrary name — robust free-form PERSON detection needs NER (spaCy), which is the
+# v0.2.1 roadmap. See README "Pseudonymisation coverage" for the honest limit.
+_NAME_CORE = r"[A-Z][A-Za-z'.\-]+(?:\s+[A-Z][A-Za-z'.&\-]+){0,3}"
+CONTEXT_NAME_LEAD_RE = re.compile(
+    r"\b(?:client|clients|represent(?:s|ing)?|on behalf of|plaintiff|defendant|"
+    r"petitioner|respondent|complainant|movant|v\.|vs\.|versus)\s+(" + _NAME_CORE + r")"
+)
+CONTEXT_NAME_ROLE_RE = re.compile(
+    r"\b(" + _NAME_CORE + r"),?\s+(?:member|owner|officer|director|manager|principal|"
+    r"executor|executrix|administrator|administratrix|trustee|guardian|"
+    r"petitioner|respondent|plaintiff|defendant)\b"
+)
+
+# Residue detection (v0.1.2 — Residue Disclosure). After sanitize() has masked the
+# IDs + anchored/honorific names, scan for capitalised multi-word tokens that LOOK
+# like an un-masked name/entity the gateway did not catch. A WARNING signal only —
+# conservative, false positives acceptable (never blocks the call).
+RESIDUE_NAME_RE = re.compile(r"\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+){1,3}\b")
+
 
 # Standalone capitalized name pair (two capitalized words, neither in COMMON_NON_NAME) — heuristic
 # This is intentionally CONSERVATIVE — false negatives preferred over false positives for personal names
@@ -304,6 +332,7 @@ class PseudonymisationGateway:
         # Each: (regex_pattern, entity_type_label)
         self.patterns: list[tuple[re.Pattern, str]] = [
             # UK-native (priority for UK jurisdiction)
+            (UK_POSTCODE_RE, "UK_POSTCODE"),
             (NI_NUMBER_RE, "NI_NUMBER"),
             (NHS_NUMBER_RE, "NHS_NUMBER"),
             (UTR_RE, "UTR"),
@@ -326,6 +355,8 @@ class PseudonymisationGateway:
             (PHONE_RE, "PHONE"),
             (AMOUNT_RE, "AMOUNT"),
             (DATE_RE, "DATE"),
+            (CONTEXT_NAME_LEAD_RE, "PERSON"),
+            (CONTEXT_NAME_ROLE_RE, "PERSON"),
             (NAME_RE, "PERSON"),
         ]
 
@@ -356,6 +387,63 @@ class PseudonymisationGateway:
                     placeholder = token_map.add(original, entity_type)
                     out = out[: m.start()] + placeholder + out[m.end() :]
         return out, token_map
+
+    def detect_residue(self, text: str) -> list[str]:
+        """Capitalised multi-word tokens left in ALREADY-sanitised ``text`` that look
+        like an un-masked person/entity name. A WARNING signal only — conservative,
+        false positives acceptable, never blocks. Placeholders ([PERSON_1]) never match.
+        """
+        skip = COMMON_NON_NAME_WORDS | {
+            "New",
+            "York",
+            "Los",
+            "Angeles",
+            "San",
+            "Francisco",
+            "Las",
+            "Vegas",
+            "United",
+            "States",
+            "Saint",
+            "Fort",
+            "Lake",
+        }
+        residue: list[str] = []
+        seen: set[str] = set()
+        for m in RESIDUE_NAME_RE.finditer(text):
+            candidate = m.group(0)
+            # Suppress only when EVERY word is a known non-name token (e.g. "New York",
+            # "Supreme Court") — a real name with one common-word part (e.g. a surname
+            # "Court") is still surfaced. Favours surfacing over silence (promise 1).
+            if all(word in skip for word in candidate.split()):
+                continue
+            if candidate not in seen:
+                seen.add(candidate)
+                residue.append(candidate)
+        return residue
+
+    def sanitize_with_disclosure(self, text: str) -> tuple[str, TokenMap, dict]:
+        """Like :meth:`sanitize` but ALSO returns a residue-disclosure record.
+
+        ``disclosure`` = masked_counts · residue · residue_hashes · residue_lengths.
+        ``residue`` (raw candidates) is IN-MEMORY only for surfacing to the user; the
+        on-disk audit log keeps only the sha256 hashes (see ``pseudonymisation_audit``),
+        so real PII never touches disk. ``sanitize()``'s 2-tuple contract is unchanged.
+        """
+        clean, token_map = self.sanitize(text)
+        residue = self.detect_residue(clean)
+        return (
+            clean,
+            token_map,
+            {
+                "masked_counts": dict(token_map.counters),
+                "residue": residue,
+                "residue_hashes": [
+                    hashlib.sha256(r.encode("utf-8")).hexdigest()[:16] for r in residue
+                ],
+                "residue_lengths": [len(r) for r in residue],
+            },
+        )
 
     def desanitize(self, text: str, token_map: TokenMap) -> str:
         """Replace all placeholders back with originals using the token map."""

@@ -1,28 +1,25 @@
-description = "✍️ Pair every drafted document with a Word (.docx) file. When the advocate asks for a draft — complaint, petition, affidavit, reply, plaint, sale-deed analysis, advisory note — produce BOTH the markdown AND the .docx in the same directory. Word is what the registry accepts and what clients open. Markdown is what the firm reads and diffs."
+description = "✍️ Pair every drafted document with a Word (.docx) file. When the solicitor asks for a draft — claim form, particulars of claim, defence, witness statement, skeleton argument, advice/opinion — produce BOTH the markdown AND the .docx in the same directory. Word is what the court accepts and what clients open. Markdown is what the firm reads and diffs."
 
 prompt = """
 # ✍️ Draft-With-Docx — UK AI Brain
 
-The advocate said:
+The solicitor said:
 
 \"\"\"
 {{args}}
 \"\"\"
 
-You are producing a legal document for the advocate's matter. The firm's standing rule: every drafted document ships as a paired `.md` + `.docx` in the same directory, atomically. Markdown for the firm, Word for the registry and the client.
+You are producing a legal document for the solicitor's matter. The firm's standing rule: every drafted document ships as a paired `.md` + `.docx` in the same directory, atomically. Markdown for the firm, Word for the court and the client.
 
 ## Step 1 — Detect the document type
 
-Identify what the advocate is asking you to draft:
-- Pleadings (complaint, plaint, written statement, replication)
-- Petitions (writ, SLP, review, curative, transfer, contempt)
-- Criminal pleadings (bail, anticipatory bail, 482 CrPC / 528 BNSS, revision, appeal)
-- Civil applications (Section 9 Arb, Section 11 Arb, Order 39 R.1-2, O.7 R.11)
-- Affidavits (verification, counter-affidavit, rejoinder)
-- Notices (legal notice, Section 80 CPC, Section 138 NI demand)
-- Advisory notes, legal opinions, due-diligence reports
-- Sale deed analysis, title search, property reports
-- Tax forms (Form 35, Form 36, Section 263 reply, Section 148A objection)
+Identify what the solicitor is asking you to draft:
+- Statements of case (claim form under CPR Part 7/Part 8, particulars of claim, defence, reply, counterclaim, Part 20 claim)
+- Applications (application notice Form N244, draft order, consent order, Tomlin order)
+- Evidence (witness statement with statement of truth, exhibits, expert report)
+- Advocacy (skeleton argument, position statement, chronology, case summary)
+- Settlement (Part 36 offer, letter before claim under the Pre-Action Protocol, settlement agreement)
+- Advisory (advice/opinion, instructions to counsel, attendance note, due-diligence report)
 
 ## Step 2 — Locate the matter folder
 
@@ -52,13 +49,13 @@ If pandoc reports missing, fall back:
 
 !{ls -la drafts/*.md drafts/*.docx | tail -4}
 
-## Step 6 — Report to advocate
+## Step 6 — Report to solicitor
 
-Tell the advocate:
+Tell the solicitor:
 
 > ✍️ Draft ready (paired):
 > - `drafts/YYYY-MM-DD-<title>.md` — for the firm + diffs
-> - `drafts/YYYY-MM-DD-<title>.docx` — for the registry + client
+> - `drafts/YYYY-MM-DD-<title>.docx` — for the court + client
 
 NEVER report "draft ready" if only one of the two files exists.
 
