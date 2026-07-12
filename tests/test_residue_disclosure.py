@@ -122,7 +122,7 @@ def test_llm_complete_audits_and_still_replies(monkeypatch, tmp_path):
     assert "Maria Gonzalez" in out  # restored in reply
 
 
-# ── review hardening (2026-07-12): locks fixes #3 (ZIP) + #4 (residue skip) ──
+# ── Review hardening (2026-07-12): locks fixes #3 (ZIP) + #4 (residue skip) ──
 def test_uk_postcode_is_masked():
     """UK: postcode must be masked (registered UK_POSTCODE_RE)."""
     gw = PseudonymisationGateway()
@@ -131,7 +131,7 @@ def test_uk_postcode_is_masked():
 
 
 def test_residue_surfaces_name_with_one_common_word():
-    """finding #4: `all`-skip means a real name with one common-word part still surfaces."""
+    """Hardening #4: `all`-skip means a real name with one common-word part still surfaces."""
     gw = PseudonymisationGateway()
     # "Court" is a common non-name word; the person "Marcus Court" must still be flagged.
     residue = gw.detect_residue("Please add Marcus Court to the witness list.")
