@@ -8,10 +8,7 @@ _NEXT_STEP = (
     "Invoke draft-with-docx with the case folder; verify the current CPR "
     "Practice Direction and prescribed form."
 )
-_NOTE = (
-    "AI classification — confirm the document type and the current CPR form "
-    "before filing."
-)
+_NOTE = "AI classification — confirm the document type and the current CPR form before filing."
 
 
 def _classify(text: str) -> str:

@@ -86,7 +86,12 @@ class TestDraftingUK:
         assert "doc_type" in r and "suggested_skill" in r
 
     def test_no_foreign_residue(self):
-        for q in ["draft a claim form", "draft a writ", "draft an SLP", "draft an originating claim"]:
+        for q in [
+            "draft a claim form",
+            "draft a writ",
+            "draft an SLP",
+            "draft an originating claim",
+        ]:
             assert not FOREIGN_RESIDUE.search(_flat(drafting_agent.handle(q))), q
 
 

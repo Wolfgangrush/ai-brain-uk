@@ -38,13 +38,13 @@ def _now_iso() -> str:
 
 def _add_matter(text: str, lower: str, data: dict) -> dict:
     if lower.startswith("add matter "):
-        name = text[len("add matter "):].strip() or "Untitled matter"
+        name = text[len("add matter ") :].strip() or "Untitled matter"
     elif lower.startswith("add matter"):
-        name = text[len("add matter"):].strip() or "Untitled matter"
+        name = text[len("add matter") :].strip() or "Untitled matter"
     elif lower.startswith("new matter "):
-        name = text[len("new matter "):].strip() or "Untitled matter"
+        name = text[len("new matter ") :].strip() or "Untitled matter"
     elif lower.startswith("new matter"):
-        name = text[len("new matter"):].strip() or "Untitled matter"
+        name = text[len("new matter") :].strip() or "Untitled matter"
     else:
         name = "Untitled matter"
     now = _now_iso()
@@ -90,11 +90,11 @@ def handle(payload: str) -> dict:
         # status of <x>
         name = None
         if lower.startswith("status of "):
-            name = text[len("status of "):].strip()
+            name = text[len("status of ") :].strip()
         elif lower.startswith("about "):
-            name = text[len("about "):].strip()
+            name = text[len("about ") :].strip()
         elif lower.startswith("matter "):
-            name = text[len("matter "):].strip()
+            name = text[len("matter ") :].strip()
 
         if name:
             entry = data.get(name)
