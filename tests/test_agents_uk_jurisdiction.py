@@ -10,7 +10,6 @@ residue — neither India (1963/CrPC/writ/SLP/482/indian-*) NOR Singapore
 import inspect
 import re
 
-import pytest
 
 from ailawfirm_uk.agents import deadline_agent, drafting_agent, matter_agent
 
