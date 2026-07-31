@@ -132,7 +132,7 @@ Magic Circle firms have legal-engineering teams. Solo solicitors don't. We built
 ### Step 2 — Install Python (one-time) + the tool
 
 ```bash
-pip install git+https://github.com/Wolfgangrush/ai-law-firm-uk.git
+pip install git+https://github.com/Wolfgangrush/ai-brain-uk.git
 ```
 
 ### Step 3 — Connect an AI brain (ONE COMMAND)
@@ -302,7 +302,7 @@ When a new version of AI Brain — UK is published, you pull it in with **one co
 ailawfirm-uk update
 ```
 
-Under the hood this runs `pip install --upgrade git+https://github.com/Wolfgangrush/ai-law-firm-uk.git`. After it finishes, restart any open `ailawfirm-uk` session so the new skills + prompts load.
+Under the hood this runs `pip install --upgrade git+https://github.com/Wolfgangrush/ai-brain-uk.git`. After it finishes, restart any open `ailawfirm-uk` session so the new skills + prompts load.
 
 ### Path 2 — Inside Claude Code
 
@@ -438,7 +438,7 @@ Ships AS-IS without warranty. See [LICENSE](LICENSE).
 
 ## 📞 Support
 
-- **Issues / bugs:** https://github.com/Wolfgangrush/ai-law-firm-uk/issues
+- **Issues / bugs:** https://github.com/Wolfgangrush/ai-brain-uk/issues
 - **Translation help:** [TRANSLATION_HELP_WANTED.md](TRANSLATION_HELP_WANTED.md) (Welsh · Scottish Gaelic · Irish PRs welcome)
 - **Want to add a feature?** Open an issue with `[feature-request]` label
 

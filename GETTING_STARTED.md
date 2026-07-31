@@ -30,7 +30,7 @@ It is **not a robot lawyer**. It does not file documents, correspond with client
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/Wolfgangrush/ai-law-firm-uk.git
+git clone https://github.com/Wolfgangrush/ai-brain-uk.git
 cd ai-law-firm-uk
 
 # 2. Create virtual environment
@@ -52,7 +52,7 @@ See [MAC_INSTALL.md](MAC_INSTALL.md) for detailed macOS instructions including H
 ## Quick Install (Windows)
 
 ```powershell
-git clone https://github.com/Wolfgangrush/ai-law-firm-uk.git
+git clone https://github.com/Wolfgangrush/ai-brain-uk.git
 cd ai-law-firm-uk
 python -m venv .venv
 .venv\Scripts\activate
@@ -66,7 +66,7 @@ See [WINDOWS_INSTALL.md](WINDOWS_INSTALL.md) for detailed Windows instructions.
 ## Quick Install (Linux)
 
 ```bash
-git clone https://github.com/Wolfgangrush/ai-law-firm-uk.git
+git clone https://github.com/Wolfgangrush/ai-brain-uk.git
 cd ai-law-firm-uk
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e .
@@ -197,7 +197,7 @@ See [MODEL_SETUP.md](MODEL_SETUP.md) for the LLM boundary discussion.
 
 - Read [SCOPE.md](SCOPE.md) to understand what's in v0.1 and what's coming
 - Read [KNOWLEDGE_PROVENANCE.md](KNOWLEDGE_PROVENANCE.md) to see the research sources behind every domain claim
-- File issues at [github.com/Wolfgangrush/ai-law-firm-uk/issues](https://github.com/Wolfgangrush/ai-law-firm-uk/issues)
+- File issues at [github.com/Wolfgangrush/ai-brain-uk/issues](https://github.com/Wolfgangrush/ai-brain-uk/issues)
 - For Welsh/Scottish Gaelic/Irish speakers: [TRANSLATION_HELP_WANTED.md](TRANSLATION_HELP_WANTED.md)
 
 ---

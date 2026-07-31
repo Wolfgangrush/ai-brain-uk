@@ -20,7 +20,7 @@ Native or fluent speakers of Welsh, Scottish Gaelic, or Irish to:
 
 ## How to contribute
 
-1. Fork the repo: `github.com/Wolfgangrush/ai-law-firm-uk`
+1. Fork the repo: `github.com/Wolfgangrush/ai-brain-uk`
 2. Edit the relevant GETTING_STARTED_*.md file
 3. Submit a PR with a brief description of what you fixed
 4. Add your name to the credits in the file if you'd like

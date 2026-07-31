@@ -24,7 +24,7 @@ python3 --version  # expect 3.9 or higher
 ### 2. Clone the Repo
 
 ```bash
-git clone https://github.com/Wolfgangrush/ai-law-firm-uk.git
+git clone https://github.com/Wolfgangrush/ai-brain-uk.git
 cd ai-law-firm-uk
 ```
 

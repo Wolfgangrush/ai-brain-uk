@@ -22,7 +22,7 @@ Mae AI Brain UK yn system weithredu ymarferol leol-gyntaf ar gyfer unig gyfreith
 ## Gosod (macOS)
 
 ```bash
-git clone https://github.com/Wolfgangrush/ai-law-firm-uk.git
+git clone https://github.com/Wolfgangrush/ai-brain-uk.git
 cd ai-law-firm-uk
 python3 -m venv .venv
 source .venv/bin/activate
@@ -36,7 +36,7 @@ Gweler [MAC_INSTALL.md](MAC_INSTALL.md) am gyfarwyddiadau manwl.
 ## Gosod (Windows)
 
 ```powershell
-git clone https://github.com/Wolfgangrush/ai-law-firm-uk.git
+git clone https://github.com/Wolfgangrush/ai-brain-uk.git
 cd ai-law-firm-uk
 python -m venv .venv
 .venv\Scripts\activate
@@ -49,7 +49,7 @@ Gweler [WINDOWS_INSTALL.md](WINDOWS_INSTALL.md).
 ## Gosod (Linux)
 
 ```bash
-git clone https://github.com/Wolfgangrush/ai-law-firm-uk.git
+git clone https://github.com/Wolfgangrush/ai-brain-uk.git
 cd ai-law-firm-uk
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e .

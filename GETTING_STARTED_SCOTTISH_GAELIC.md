@@ -22,7 +22,7 @@
 ## Stàladh (macOS)
 
 ```bash
-git clone https://github.com/Wolfgangrush/ai-law-firm-uk.git
+git clone https://github.com/Wolfgangrush/ai-brain-uk.git
 cd ai-law-firm-uk
 python3 -m venv .venv
 source .venv/bin/activate
@@ -36,7 +36,7 @@ Faic [MAC_INSTALL.md](MAC_INSTALL.md) airson stiùireadh mionaideach.
 ## Stàladh (Windows)
 
 ```powershell
-git clone https://github.com/Wolfgangrush/ai-law-firm-uk.git
+git clone https://github.com/Wolfgangrush/ai-brain-uk.git
 cd ai-law-firm-uk
 python -m venv .venv
 .venv\Scripts\activate
@@ -49,7 +49,7 @@ Faic [WINDOWS_INSTALL.md](WINDOWS_INSTALL.md).
 ## Stàladh (Linux)
 
 ```bash
-git clone https://github.com/Wolfgangrush/ai-law-firm-uk.git
+git clone https://github.com/Wolfgangrush/ai-brain-uk.git
 cd ai-law-firm-uk
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e .

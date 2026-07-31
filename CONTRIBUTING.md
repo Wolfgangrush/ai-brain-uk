@@ -5,7 +5,7 @@ Thanks for wanting to help. **AI Brain — UK** is open source (MIT). Contributi
 ## Getting started
 
 ```bash
-git clone https://github.com/Wolfgangrush/ai-law-firm-uk.git
+git clone https://github.com/Wolfgangrush/ai-brain-uk.git
 cd ai-law-firm-uk
 pip install -e ".[dev]"
 ```

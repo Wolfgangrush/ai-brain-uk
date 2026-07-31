@@ -35,9 +35,9 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/Wolfgangrush/ai-law-firm-uk"
-Repository = "https://github.com/Wolfgangrush/ai-law-firm-uk"
-"Bug Tracker" = "https://github.com/Wolfgangrush/ai-law-firm-uk/issues"
+Homepage = "https://github.com/Wolfgangrush/ai-brain-uk"
+Repository = "https://github.com/Wolfgangrush/ai-brain-uk"
+"Bug Tracker" = "https://github.com/Wolfgangrush/ai-brain-uk/issues"
 "Upstream Engine" = "https://github.com/Wolfgangrush"
 
 [tool.setuptools.packages.find]
