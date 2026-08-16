@@ -14,7 +14,7 @@ Visit the live site: [wolfgangrush.github.io](https://wolfgangrush.github.io)
 
 # 🇬🇧 AI Brain for UK Lawyers
 
-> **Free practice OS for every UK solo solicitor, barrister, advocate (Scotland), CILEx-regulated practitioner, and in-house counsel. Terminal-native. Local-first by default (Ollama + Qwen3 — nothing leaves your laptop). Cloud-LLM optional with the [Pseudonymisation Gateway](https://github.com/Wolfgangrush/pseudonymisation-gateway) sanitising PII before any prompt leaves the machine.**
+> **Free practice OS for every UK solo solicitor, barrister, advocate (Scotland), CILEx-regulated practitioner, and in-house counsel. Terminal-native. Cloud-LLM behind the [Pseudonymisation Gateway](https://github.com/Wolfgangrush/pseudonymisation-gateway) sanitising PII before any prompt leaves the machine.**
 
 **For qualified legal professionals only.** Intended for solicitors regulated by the SRA, barristers regulated by the BSB, advocates regulated by the Faculty of Advocates (Scotland), solicitors regulated by the Law Society of Scotland or the Law Society of Northern Ireland, CILEx-regulated practitioners, in-house counsel of UK entities, and paralegals working under their supervision. **If you are not a qualified legal professional, do not use this tool to produce client-facing legal work.** Read [DISCLAIMER.md](DISCLAIMER.md) before installation.
 
@@ -152,9 +152,19 @@ After this, **no queries leave your laptop**.
 
 Three honest model options — see [MODEL_SETUP.md](MODEL_SETUP.md):
 
+
+> ### ⚠️ Local-model tier is NOT wired yet (2026-08-16)
+> The local Ollama tier described below is **not implemented in this release** — no code path
+> routes inference to Ollama, so nothing in this repository currently delivers the
+> "nothing leaves your laptop" position, and no regulatory duty here is satisfied by *absence of
+> transmission* today. The **cloud path and its pseudonymisation gateway are real** (wired on
+> every egress, covered by tests). Assume every AI answer is cloud-processed until this notice is
+> removed. See `MODEL_SETUP.md`.
+
+
 | Choice | Cost | Privacy | Best for |
 |---|---|---|---|
-| 🥇 **Local Ollama + Qwen3** | £0 forever | 🟢 Perfect — nothing leaves your laptop | **Client matters · SRA Rule 6.3 / BSB rC15 confidentiality · UK GDPR-sensitive work** |
+| 🚧 **Local Ollama + Qwen3** | £0 forever | ⛔ **NOT WIRED YET** — this tier is not implemented in this release; no duty is satisfied by absence of transmission today | *(planned — next milestone)* |
 | 🥈 **DeepSeek API** | ~£2-5/mo | ⚠️ Acceptable IF opt-out — but China is NOT on UK ICO adequacy list; UK GDPR Chapter V applies | Non-client work · public-law research · templates |
 | 🥉 **Claude / Gemini API** | ~£25-70/mo | 🟢 Strong (enterprise privacy default-ON) | Heavy daily users with executed Article 28 DPA + Schrems-II supplementary measures |
 
@@ -241,7 +251,7 @@ The firm's audit log captures every API call (timestamp, agent, prompt-summary, 
 
 ### v0.3+ roadmap
 
-> What v0.1 already ships: (a) local-LLM default via `connect-local` (Ollama + Qwen3 — nothing leaves your laptop in local mode), (b) configurable cloud-LLM tier covering Claude / OpenAI / paid Gemini / DeepSeek, (c) Pseudonymisation Gateway sanitising PII before any cloud-LLM call, and (d) no first-party telemetry. The items below extend the floor — they are not a future replacement for what is already shipped.
+> What v0.1 already ships: (a) `connect-local` (prepares the machine for a local model; inference is **not** yet routed locally), (b) configurable cloud-LLM tier covering Claude / OpenAI / paid Gemini / DeepSeek, (c) Pseudonymisation Gateway sanitising PII before any cloud-LLM call, and (d) no first-party telemetry. The items below extend the floor — they are not a future replacement for what is already shipped.
 
 - **Signed offline-install bundle** — the `pip install` path currently touches PyPI and the Ollama model registry; v0.3+ ships a signed offline-installable archive with the Qwen3 model pre-bundled, removing the last network-touch point even at install time. For solicitors on physically air-gapped networks (under-seal court matter rooms, state-secret-clearance environments, prison-side advice).
 - **In-firm LLM tenant adapter** — drop-in config for Azure OpenAI / private Vertex / on-prem vLLM endpoints. Distinct from the today-shipped public-API cloud-LLM tier; targets solicitors whose firm already provisions LLM infrastructure under its own DPA.

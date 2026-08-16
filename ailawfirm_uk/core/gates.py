@@ -214,12 +214,20 @@ def log_direct_access_response(
 
 # ── LPP Firewall ──────────────────────────────────────────────────────────
 
+# Local-tier flag — local inference is not wired in this release. Flip to True
+# only when brain/llm.py actually routes to a local model (e.g. ollama on
+# 127.0.0.1). Until then, every caller must treat "local" mode as not
+# available and cannot honestly report that data does not leave the machine.
+LOCAL_TIER_IMPLEMENTED = False
+
+
 LPP_LOCAL_MODE_MESSAGE = (
-    "LPP FIREWALL · LOCAL MODE: Confidential client data does not leave the "
-    "local environment in this configuration. Ollama + Qwen3 run on this laptop. "
-    "Munir [2026] UKUT 81 (IAC) LPP-preservation considerations are satisfied "
-    "by absence of cross-vendor transmission. Free/public cloud AI tools cannot "
-    "make this claim."
+    "LPP FIREWALL · LOCAL MODE (NOT IMPLEMENTED IN THIS RELEASE): Local "
+    "inference is not wired in this release (LOCAL_TIER_IMPLEMENTED=False). "
+    "Configuration requesting 'ollama' or 'local' is silently routed to a "
+    "cloud provider by brain/llm.py. Treat all prompts as cloud-routed. "
+    "Munir [2026] UKUT 81 (IAC) LPP responsibility remains with the user; "
+    "verify Pseudonymisation Gateway coverage and your vendor DPA."
 )
 
 LPP_CLOUD_MODE_MESSAGE_TEMPLATE = (
@@ -240,76 +248,105 @@ LPP_FIREWALL_MESSAGE = LPP_LOCAL_MODE_MESSAGE
 def _read_provider_from_config() -> str:
     """Read the configured llm_provider from ~/.ailawfirm_uk/config.json.
 
-    Returns 'local' (default) if no config exists, or if ai_provider/llm_provider
-    is 'ollama' / 'local' / unset. Returns the provider name
-    (anthropic/openai/google/deepseek) if a cloud provider is configured.
+    Local inference is NOT implemented in this release (LOCAL_TIER_IMPLEMENTED).
+    Therefore this helper cannot honestly report "local" mode — no code path
+    routes inference to a local model, so saying so would be a false statement
+    that data does not leave the machine.
+
+    Returns one of:
+      - "cloud-unconfigured":           no config file, unreadable config, or
+                                         no ai_provider/llm_provider key set
+      - "cloud-<provider_name>":        named cloud provider
+                                         (anthropic / openai / google / deepseek)
+      - "cloud-despite-local-config":   the config requests "ollama" or
+                                         "local" but the code still sends to
+                                         the cloud — the user's stated intent
+                                         and the actual behaviour diverge
     """
     config_path = Path.home() / ".ailawfirm_uk" / "config.json"
     if not config_path.exists():
         # Fallback to the legacy lowercase-hyphen path some installs used.
         legacy_path = Path.home() / ".ailawfirm-uk" / "config.json"
         if not legacy_path.exists():
-            return "local"
+            return "cloud-unconfigured"
         config_path = legacy_path
     try:
         cfg = json.loads(config_path.read_text())
-        provider = (cfg.get("ai_provider") or cfg.get("llm_provider") or "local").lower()
-        if provider in ("ollama", "local", ""):
-            return "local"
-        return provider
     except (OSError, json.JSONDecodeError):
-        return "local"
+        return "cloud-unconfigured"
+
+    provider = (cfg.get("ai_provider") or cfg.get("llm_provider") or "").lower()
+    if provider in ("ollama", "local"):
+        # The user has asked for local inference; we don't implement it. Name
+        # the divergence so it cannot be silently swallowed downstream.
+        return "cloud-despite-local-config"
+    if not provider:
+        return "cloud-unconfigured"
+    return f"cloud-{provider}"
 
 
 def lpp_firewall_check() -> dict:
     """Return the LPP firewall status — runtime check of configured LLM provider.
 
-    Reads the user's config.json and reports honestly whether the tool is in
-    local mode (data does not leave the machine) or cloud mode (PII is sanitised
-    via Pseudonymisation Gateway before transmission; user retains LPP
-    responsibility).
+    Reads the user's config.json and reports the effective egress route. In this
+    release, inference is ALWAYS routed to a cloud provider (see
+    LOCAL_TIER_IMPLEMENTED); "local mode" is not implemented, so this helper
+    cannot honestly report that data does not leave the machine.
 
-    NOT an architectural guarantee in cloud mode — the Gateway sanitisation is
-    structural, but the user remains responsible for vendor DPA + UK GDPR
-    Schedule 21 supplementary safeguards.
+    Pseudonymisation Gateway sanitisation is applied on every egress
+    (sanitise → POST → desanitise); the user retains vendor DPA + UK GDPR
+    Schedule 21 supplementary safeguards responsibility.
     """
     provider = _read_provider_from_config()
-    if provider == "local":
-        return {
-            "status": "active",
-            "mode": "local",
-            "provider": "ollama (or v0.1 keyword-matching brain · no LLM)",
-            "data_transmission": "none",
-            "lpp_preserved_by": "architecture (absence of cross-vendor transmission)",
-            "precedent": "Munir [2026] UKUT 81 (IAC)",
-            "message": LPP_LOCAL_MODE_MESSAGE,
-            "user_obligations_remaining": (
-                "Standard SRA Rule 6.3 / BSB rC15 client-confidentiality "
-                "obligations in your conduct of the matter."
-            ),
-        }
-    return {
+
+    # Map the helper's prefixed return values to a human-readable display name
+    # for the returned dict. The raw prefixed value is preserved in the local
+    # `provider` variable; downstream consumers that key off it must be updated
+    # to recognise the "cloud-" prefix.
+    if provider == "cloud-unconfigured":
+        display_provider = "unconfigured (default cloud vendor)"
+        warning = None
+    elif provider == "cloud-despite-local-config":
+        display_provider = "cloud vendor (default anthropic) — see warning"
+        warning = (
+            "Configuration requests local inference ('ollama' or 'local'), but "
+            "this release does not implement a local tier "
+            "(LOCAL_TIER_IMPLEMENTED=False). Prompts are being sent to a cloud "
+            "provider (default https://api.anthropic.com) after "
+            "Pseudonymisation Gateway sanitisation. This is the most dangerous "
+            "state: the user's configuration says local, the code does cloud. "
+            "Investigate and reconfigure immediately."
+        )
+    else:
+        # "cloud-<name>" form, e.g. "cloud-anthropic"
+        display_provider = provider[len("cloud-") :]
+        warning = None
+
+    result = {
         "status": "active",
         "mode": "cloud",
-        "provider": provider,
+        "provider": display_provider,
         "data_transmission": (
             "via Pseudonymisation Gateway (placeholders substituted before "
-            "transmission to "
-            f"{provider})"
+            f"transmission to {display_provider})"
         ),
         "lpp_preserved_by": (
             "Gateway sanitisation + your vendor DPA + your UK GDPR Schedule 21 "
             "supplementary safeguards"
         ),
         "precedent": "Munir [2026] UKUT 81 (IAC)",
-        "message": LPP_CLOUD_MODE_MESSAGE_TEMPLATE.format(provider=provider),
+        "message": LPP_CLOUD_MODE_MESSAGE_TEMPLATE.format(provider=display_provider),
         "user_obligations_remaining": (
-            f"Execute {provider}'s DPA / Article 28 contract. Implement UK GDPR "
-            f"Schedule 21 supplementary safeguards if {provider}'s servers are "
-            "outside UK ICO-adequate jurisdictions. Verify Pseudonymisation "
-            "Gateway coverage of your matter's specific identifiers."
+            f"Execute {display_provider}'s DPA / Article 28 contract. "
+            f"Implement UK GDPR Schedule 21 supplementary safeguards if "
+            f"{display_provider}'s servers are outside UK ICO-adequate "
+            "jurisdictions. Verify Pseudonymisation Gateway coverage of your "
+            "matter's specific identifiers."
         ),
     }
+    if warning is not None:
+        result["warning"] = warning
+    return result
 
 
 # ── Session Startup Compliance Banner ──────────────────────────────────────
