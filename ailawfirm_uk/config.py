@@ -90,6 +90,15 @@ class BrainConfig:
                 self._file_config = {}
 
     @property
+    def config_dir(self):
+        """Path to the brain config directory (e.g. ``~/.ailawfirm-uk``).
+
+        Exposed so ``brain/llm.py`` can pass it to ``pseudonymisation_audit``
+        without inventing a parallel config loader.
+        """
+        return self._config_dir
+
+    @property
     def palace_path(self):
         """Path to the memory palace data directory."""
         env_val = os.environ.get("AILAWFIRM_UK_PALACE_PATH")
