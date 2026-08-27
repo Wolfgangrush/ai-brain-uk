@@ -44,24 +44,24 @@ pip install -e .
 ### 5. Initialize
 
 ```bash
-ailawfirm-uk init
+aibrain-uk init
 ```
 
-This creates `~/.ailawfirm-uk/` with default config.
+This creates `~/.aibrain-uk/` with default config.
 
 ### 6. Verify
 
 ```bash
-ailawfirm-uk status
+aibrain-uk status
 ```
 
 ## Calendar.app Integration
 
-The calendar sync tool generates `.ics` files at `~/.ailawfirm-uk/calendar.ics`. To import into macOS Calendar:
+The calendar sync tool generates `.ics` files at `~/.aibrain-uk/calendar.ics`. To import into macOS Calendar:
 
 1. Open **Calendar.app**
 2. **File → Import...**
-3. Select `~/.ailawfirm-uk/calendar.ics`
+3. Select `~/.aibrain-uk/calendar.ics`
 4. Choose the calendar to add events to
 
 The `.ics` file auto-refreshes on each sync. Re-import to update.
@@ -73,9 +73,9 @@ Add to `~/.claude/claude_desktop_config.json` or your project's `.mcp.json`:
 ```json
 {
   "mcpServers": {
-    "ailawfirm-uk": {
+    "aibrain-uk": {
       "command": "python3",
-      "args": ["-m", "ailawfirm_uk.mcp_server"]
+      "args": ["-m", "aibrain_uk.mcp_server"]
     }
   }
 }
@@ -89,7 +89,7 @@ Add to `~/.claude/claude_desktop_config.json` or your project's `.mcp.json`:
 python3 -m pip install --break-system-packages -e .
 ```
 
-### "No module named ailawfirm_uk"
+### "No module named aibrain_uk"
 
 Ensure you're in the virtual environment and have run `pip install -e .`.
 

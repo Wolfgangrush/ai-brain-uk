@@ -714,7 +714,7 @@ def run_benchmark(
             collection = client.create_collection("mempal_drawers")
 
             if mode == "aaak":
-                from ailawfirm_uk.dialect import Dialect
+                from aibrain_uk.dialect import Dialect
 
                 dialect = Dialect()
                 docs_to_ingest = [dialect.compress(doc) for doc in corpus]

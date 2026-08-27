@@ -4,10 +4,10 @@
 
 ### Core Architecture
 - [x] Fork from MemPalace 3.0.0 (MIT)
-- [x] Package rename → `ailawfirm_uk`
-- [x] Env-var isolation (AILAWFIRM_UK_PALACE_PATH)
-- [x] Default paths → `~/.ailawfirm-uk/`
-- [x] ChromaDB collection → `ailawfirm_uk_drawers`
+- [x] Package rename → `aibrain_uk`
+- [x] Env-var isolation (AIBRAIN_UK_PALACE_PATH)
+- [x] Default paths → `~/.aibrain-uk/`
+- [x] ChromaDB collection → `aibrain_uk_drawers`
 
 ### Legal Domain Modules
 - [x] Ontology enums — UK courts, statutes, bar rules, Matter/Citation/CalendarEvent dataclasses

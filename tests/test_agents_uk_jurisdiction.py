@@ -11,7 +11,7 @@ import inspect
 import re
 
 
-from ailawfirm_uk.agents import deadline_agent, drafting_agent, matter_agent
+from aibrain_uk.agents import deadline_agent, drafting_agent, matter_agent
 
 FOREIGN_RESIDUE = re.compile(
     r"\b1963\b|CrPC|BNSS|\b482\b|\b528\b|NI Act|Order VIII|anticipatory\s+bail|"
@@ -98,7 +98,7 @@ class TestDraftingUK:
 class TestMatterUK:
     def test_store_path_is_uk(self):
         src = inspect.getsource(matter_agent)
-        assert ".ailawfirm_uk" in src
+        assert ".aibrain_uk" in src
         assert ".ailawfirm-india" not in src and ".ailawfirm_singapore" not in src
 
     def test_add_then_list_roundtrip(self, tmp_path, monkeypatch):

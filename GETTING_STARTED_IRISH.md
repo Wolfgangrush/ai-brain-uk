@@ -27,8 +27,8 @@ cd ai-law-firm-uk
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -e .
-ailawfirm-uk init
-ailawfirm-uk status
+aibrain-uk init
+aibrain-uk status
 ```
 
 Féach [MAC_INSTALL.md](MAC_INSTALL.md) le haghaidh treoracha mionsonraithe.
@@ -41,7 +41,7 @@ cd ai-law-firm-uk
 python -m venv .venv
 .venv\Scripts\activate
 pip install -e .
-ailawfirm-uk init
+aibrain-uk init
 ```
 
 Féach [WINDOWS_INSTALL.md](WINDOWS_INSTALL.md).
@@ -53,7 +53,7 @@ git clone https://github.com/Wolfgangrush/ai-brain-uk.git
 cd ai-law-firm-uk
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e .
-ailawfirm-uk init
+aibrain-uk init
 ```
 
 ## Uirlisí MCP (3)
@@ -75,7 +75,7 @@ Déanann an `compliance_agent` bratach ar:
 
 ## Príobháideachas
 
-Ritheann gach rud go háitiúil. Gan teileaméadracht. Gan scamall. Fanann do shonraí cliaint in `~/.ailawfirm-uk/palace/`.
+Ritheann gach rud go háitiúil. Gan teileaméadracht. Gan scamall. Fanann do shonraí cliaint in `~/.aibrain-uk/palace/`.
 
 ## Ceadúnas
 

@@ -11,12 +11,12 @@ limitation/deadline, drafting, SRA / BSB / UK GDPR / compliance, matter lookup, 
 route it through the local brain and NEVER answer from your own model knowledge:
 
 ```
-python3 -m ailawfirm_uk ask "<the user's question, verbatim>"
+python3 -m aibrain_uk ask "<the user's question, verbatim>"
 ```
 
 Relay the brain's answer. The brain is AI-backed and grounded on a deterministic engine; it is the authority on
 correctness. Keep "AI can be wrong — verify before relying" on every answer. On "turn it on"/"start"/"boot" run
-`python3 -m ailawfirm_uk reception` first. Only pure non-legal chit-chat may be answered directly.
+`python3 -m aibrain_uk reception` first. Only pure non-legal chit-chat may be answered directly.
 
 ## Enforcement by host (be accurate — do not overstate)
 

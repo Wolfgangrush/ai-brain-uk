@@ -1,11 +1,11 @@
-from ailawfirm_uk.core.ontology import CalendarEvent
-from ailawfirm_uk.mcp_tools.calendar_sync import generate_ics
+from aibrain_uk.core.ontology import CalendarEvent
+from aibrain_uk.mcp_tools.calendar_sync import generate_ics
 
 
 class TestCalendarSync:
     def test_generates_valid_ics(self):
         event = CalendarEvent(
-            event_id="evt-001@ailawfirm-uk",
+            event_id="evt-001@aibrain-uk",
             matter_id="M001",
             summary_alias="CLIENT_A hearing",
             body_full="Case management conference in CLIENT_A matter",
@@ -24,7 +24,7 @@ class TestCalendarSync:
 
     def test_bst_summer_date(self):
         event = CalendarEvent(
-            event_id="evt-bst@ailawfirm-uk",
+            event_id="evt-bst@aibrain-uk",
             matter_id="M002",
             summary_alias="BST_TEST hearing",
             start_iso="2026-07-15T10:00:00+01:00",
@@ -40,7 +40,7 @@ class TestCalendarSync:
 
     def test_gmt_winter_date(self):
         event = CalendarEvent(
-            event_id="evt-gmt@ailawfirm-uk",
+            event_id="evt-gmt@aibrain-uk",
             matter_id="M003",
             summary_alias="WINTER_TEST conference",
             start_iso="2026-12-15T10:00:00+00:00",
@@ -54,7 +54,7 @@ class TestCalendarSync:
 
     def test_minimal_event(self):
         event = CalendarEvent(
-            event_id="evt-min@ailawfirm-uk",
+            event_id="evt-min@aibrain-uk",
             summary_alias="Quick check-in",
             start_iso="2026-05-20T09:00:00+00:00",
             end_iso="2026-05-20T09:30:00+00:00",

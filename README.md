@@ -112,7 +112,7 @@ Magic Circle firms have legal-engineering teams. Solo solicitors don't. We built
 | ✍️ | **The Drafting Assistant** | Ships with **107 UK drafting templates** in [`_drafting_data/`](_drafting_data/) covering: contracts (sale of goods · services · employment · NDA · tenancy · commercial lease · shareholders · loan · settlement) · pleadings (N1 · particulars · defence + counterclaim · reply · witness statement) · motions (N244 · summary judgment · strike-out) · evidence (statement of truth · ET1) · pre-action + settlement (letter before claim · consent · Tomlin · Part 36) · costs (Form Precedent H · bill of costs · retainer) · insolvency (statutory demand · winding-up · administration · IVA · individual bankruptcy) · style guides (drafting · OSCOLA citation · formatting per PD 5A) **plus 62 litigation-backbone templates** covering all 13 categories: appeals (N161 · grounds · skeleton · permission · SC) · injunctions (without-notice · freezing · search · undertaking · interim skeleton) · disclosure (DRD PD 57AD · N265 · privilege log · redaction · models A-E) · expert evidence (CPR Part 35 instruction · report · joint statement · SJE · cross-exam) · default judgment (N225/N227 · set aside) · enforcement (HCEO · charging order · TPDO · attachment of earnings · writ of control) · skeleton arguments (trial · CMC · directions · interim · summary judgment) · counsel briefing (brief · merits · evidence · settle pleadings · conference) · judicial review (N461 · grounds · AoS N462 · permission skeleton · summary grounds of resistance) · trial documentation (bundle · authorities · chronology · cast list · reading list · opening · closing · PD 57AC compliance) · ADR (mediation position · agreement · settlement deed · WP protocols) · insolvency-beyond-statutory-demand · specialist tribunals (FTT Tax · UT Tax · Immigration · Property Chamber). **Plus 10 Tier-1 statute digests** in [`_statute_corpus/`](_statute_corpus/) covering Companies Act 2006 · DPA 2018 + UK GDPR · Consumer Rights Act 2015 · Employment Rights Act 1996 · Equality Act 2010 · CPR 1998 · Solicitors Regulation + LSA 2007 · Data (Use and Access) Act 2025. **Plus 6 procedural-anchor index files** (CPR PDs · CrimPR PDs · FPR PDs · Pre-Action Protocols · Court Guides · Costs CPR 44-47). |
 | 🛡️ | **The Compliance Officer** | BSB AI Guidance (May 2026) expanded rule set. Covers rC86 (AI outsourcing), rC86.3 (conditions), rC87/rC89 (practice management), rC9.1/rC9.2 (court misleading), rC15 (confidentiality), rC19 (transparency), rC20 (personal responsibility — cannot delegate to AI), rC123 (Public Access AI-reliance). All 10 Core Duties mapped. Hamid jurisdiction case-law: Ayinde & Al-Haroun [2025] EWHC 1383 Admin, Munir [2026] UKUT 81 (IAC), Oakley v Information Commissioner [2024] UKFTT 315 (GRC). |
 | ⚖️ | **The Risk Assessor** | BSB 3×3 risk matrix — auto-classifies every session by application (admin / general client / court+vulnerable+protected characteristics), use (spelling / research / drafting+agentic), and technology (spelling tools / legal-specific AI / agentic cloud). Warns on high-risk combinations. Logs to audit trail. |
-| 📋 | **The Audit Clerk** | Always-on AI audit log — prompt + output + timestamp + user-confirmed flag. 90-day default retention with enforced deletion policy. Stored at `~/.ailawfirm-uk/audit_logs/`, never transmitted. rC87.2 practice management compliance. |
+| 📋 | **The Audit Clerk** | Always-on AI audit log — prompt + output + timestamp + user-confirmed flag. 90-day default retention with enforced deletion policy. Stored at `~/.aibrain-uk/audit_logs/`, never transmitted. rC87.2 practice management compliance. |
 | 🔐 | **The Transparency Gate** | rC19 gate: before any client-facing artifact is finalised, prompts "Has the client been informed of AI use per rC19? [y/N]" — logs response. rC20 human-in-the-loop gate: every drafting/agentic action requires explicit confirmation. No bulk-execute. No auto-emit. |
 | 👥 | **The Direct Access Detector** | If matter is marked "Public Access scheme / Direct Access," triggers rC123 routine: confirms client understands AI involvement before proceeding. |
 | 📅 | **The Calendar Sync** | ICS feed sync to iPhone Calendar / Google Calendar / Outlook — no third-party API, no data processor. code-aliased summary line (lock-screen safe) · full matter detail in event body. Timezone Europe/London (BST-aware). |
@@ -138,7 +138,7 @@ pip install git+https://github.com/Wolfgangrush/ai-brain-uk.git
 ### Step 3 — Connect an AI brain (ONE COMMAND)
 
 ```bash
-ailawfirm-uk connect-local
+aibrain-uk connect-local
 ```
 
 This single command:
@@ -172,17 +172,17 @@ Three honest model options — see [MODEL_SETUP.md](MODEL_SETUP.md):
 
 **▶ Quickstart — the commands that now work:**
 ```bash
-python3 -m ailawfirm_uk reception                 # turn it on: greeting + systems check + memory
-python3 -m ailawfirm_uk ask "validate a case citation"
-python3 -m ailawfirm_uk ask "which court has jurisdiction over my matter"
-python3 -m ailawfirm_uk chat                      # interactive — type anything, it routes for you
-python3 -m ailawfirm_uk recap                     # what you did last time
+python3 -m aibrain_uk reception                 # turn it on: greeting + systems check + memory
+python3 -m aibrain_uk ask "validate a case citation"
+python3 -m aibrain_uk ask "which court has jurisdiction over my matter"
+python3 -m aibrain_uk chat                      # interactive — type anything, it routes for you
+python3 -m aibrain_uk recap                     # what you did last time
 ```
 Inside a host CLI (Claude / GLM / Codex) opened in this folder, just say **"turn it on"** — the receptionist greets you, Solicitor, and routes everything through the brain.
 
 
 ```bash
-ailawfirm-uk
+aibrain-uk
 ```
 
 Sample commands:
@@ -202,11 +202,11 @@ Sample commands:
 
 **Architecture — three pieces decide your privacy posture:**
 
-**(1) Local-only state.** Your matters, drafts, audit logs, calendar entries, and configuration live in `~/.ailawfirm-uk/`. Never uploaded by the tool. Never synced to a third-party cloud by the tool. No telemetry. No "anonymous usage statistics." The publisher operates zero infrastructure and cannot access this folder. Verifiable via `grep -ri "telemetry\|analytics\|requests.post\|urlopen" ailawfirm_uk/` — should return only user-initiated cloud-LLM calls.
+**(1) Local-only state.** Your matters, drafts, audit logs, calendar entries, and configuration live in `~/.aibrain-uk/`. Never uploaded by the tool. Never synced to a third-party cloud by the tool. No telemetry. No "anonymous usage statistics." The publisher operates zero infrastructure and cannot access this folder. Verifiable via `grep -ri "telemetry\|analytics\|requests.post\|urlopen" aibrain_uk/` — should return only user-initiated cloud-LLM calls.
 
 **(2) LLM backend — you choose.** The default `connect-local` command configures Ollama + Qwen3 to run the language model on your laptop (truly nothing leaves). If you opt into a cloud-LLM tier (DeepSeek / Claude / Gemini) for quality reasons, see the tier table above for cost + privacy trade-offs.
 
-**(3) Pseudonymisation Gateway — always-on for cloud mode.** When you configure a cloud-LLM provider in `~/.ailawfirm-uk/config.json`, the internalised `PseudonymisationGateway` (source: `ailawfirm_uk/pseudonymisation.py` — 12 tests in `tests/test_pseudonymisation.py`) automatically substitutes real names, government IDs (NI Number · NHS Number · UTR · UK VAT · Aadhaar for Indian-diaspora matters), contact identifiers (phone · email), and case references (EWHC / EWCA / UKSC numbers) with deterministic placeholders BEFORE the prompt leaves your machine. The placeholder ↔ original map lives in memory only (never written to disk; destroyed when the gateway goes out of scope). Cloud vendors see only the abstract structure of the matter; the user sees real values restored in the response.
+**(3) Pseudonymisation Gateway — always-on for cloud mode.** When you configure a cloud-LLM provider in `~/.aibrain-uk/config.json`, the internalised `PseudonymisationGateway` (source: `aibrain_uk/pseudonymisation.py` — 12 tests in `tests/test_pseudonymisation.py`) automatically substitutes real names, government IDs (NI Number · NHS Number · UTR · UK VAT · Aadhaar for Indian-diaspora matters), contact identifiers (phone · email), and case references (EWHC / EWCA / UKSC numbers) with deterministic placeholders BEFORE the prompt leaves your machine. The placeholder ↔ original map lives in memory only (never written to disk; destroyed when the gateway goes out of scope). Cloud vendors see only the abstract structure of the matter; the user sees real values restored in the response.
 
 The wedge: every other cloud-AI legal tool sends raw client PII to the LLM by default. wolfgang_rush AI Brain — UK ships Ollama-first AND ships the Gateway as the privacy primitive that closes the gap when you choose cloud mode for quality reasons.
 
@@ -247,7 +247,7 @@ If your matter is:
 - **GDPR special-category data / health / criminal record / political opinion** → Stay in `connect-local` (Ollama + Qwen3) mode. Do not opt into any cloud-LLM tier for these matters; do not use free-tier Gemini.
 - **State secrets / classified material / under-seal court orders** → Stay in `connect-local` (Ollama + Qwen3) mode. For physically air-gapped networks where the pip-install / model-download / auto-update paths are also prohibited, await the v0.3+ signed offline-install bundle below.
 
-The firm's audit log captures every API call (timestamp, agent, prompt-summary, output-summary) at `~/.ailawfirm-uk/audit_logs/`. Logs never leave your machine. They are your professional-conduct compliance trail.
+The firm's audit log captures every API call (timestamp, agent, prompt-summary, output-summary) at `~/.aibrain-uk/audit_logs/`. Logs never leave your machine. They are your professional-conduct compliance trail.
 
 ### v0.3+ roadmap
 
@@ -276,8 +276,8 @@ The BSB AI Guidance (May 2026) states that **"it is unlikely that free-of-charge
 | **Data location** | Your prompts and client data are transmitted to third-party cloud servers (US-based) in the clear. | **Local mode**: everything runs on your laptop; zero data transmission. **Cloud mode**: only Pseudonymisation-Gateway-sanitised prompts (placeholders substituted for real PII) are transmitted, going direct to your chosen vendor — the publisher is not in the data path. |
 | **LPP preservation** | Cloud transmission may waive Legal Professional Privilege. See Munir [2026] UKUT 81 (IAC). | **Local mode**: LPP preserved by architecture (absence of cross-vendor transmission). **Cloud mode**: Pseudonymisation Gateway substitutes party names + privileged identifiers with placeholders BEFORE any prompt leaves your machine; cloud vendor sees only abstract matter structure. You remain responsible for executing your vendor DPA + Article 28 + UK GDPR Schedule 21 supplementary safeguards before invoking cloud mode for privileged work — see Munir [2026] UKUT 81 (IAC). |
 | **rC15 confidentiality** | Data entered = potential unauthorised disclosure. BSB specifically flags this as a compliance risk. | **Local mode**: data does not leave your machine. **Cloud mode**: PII is sanitised via Pseudonymisation Gateway before transmission. You retain rC15 responsibility — verify the Gateway's coverage of your matter's specific identifiers before relying on cloud mode for confidential work. |
-| **rC86.3 due diligence** | You cannot audit the model, the infrastructure, or the data handling. | MIT-licensed open source. Fully auditable. You control the model (Ollama + Qwen3 in local mode; vendor-of-choice in cloud mode). Gateway sanitisation logic is in `ailawfirm_uk/pseudonymisation.py` with 12 tests. |
-| **rC87 audit trail** | No built-in legal audit logging. Prompt history is outside your chambers' control. | Always-on AI audit log. 90-day retention. Stored locally at `~/.ailawfirm-uk/audit_logs/`. Never transmitted by the tool. |
+| **rC86.3 due diligence** | You cannot audit the model, the infrastructure, or the data handling. | MIT-licensed open source. Fully auditable. You control the model (Ollama + Qwen3 in local mode; vendor-of-choice in cloud mode). Gateway sanitisation logic is in `aibrain_uk/pseudonymisation.py` with 12 tests. |
+| **rC87 audit trail** | No built-in legal audit logging. Prompt history is outside your chambers' control. | Always-on AI audit log. 90-day retention. Stored locally at `~/.aibrain-uk/audit_logs/`. Never transmitted by the tool. |
 | **rC19 transparency** | No built-in client disclosure mechanism. | Transparency gate prompts before every client-facing output. |
 | **rC20 personal responsibility** | No guardrails against blind reliance on AI output. | Human-in-the-loop gate. Citation 2-source verification. No auto-emit. |
 | **UK GDPR compliance** | US-based cloud providers require Schrems-II supplementary measures + Article 28 DPA — and your raw client PII transits in cleartext. | **Local mode**: UK GDPR international-transfer triggers do not fire. **Cloud mode**: the international transfer is YOUR action (the publisher is not a controller or processor — see [NO_PII_NO_DATA.md](NO_PII_NO_DATA.md)); Gateway sanitisation reduces but does not eliminate Schrems II exposure. You must execute Chapter V Article 46 supplementary safeguards + Article 28 DPA with your vendor. |
@@ -290,8 +290,8 @@ The BSB AI Guidance (May 2026) states that **"it is unlikely that free-of-charge
 ## 📁 Where your data lives
 
 ```
-~/.ailawfirm-uk/                     ← Mac/Linux
-C:\Users\YourName\.ailawfirm-uk\     ← Windows
+~/.aibrain-uk/                     ← Mac/Linux
+C:\Users\YourName\.aibrain-uk\     ← Windows
 ├── palace/                          ← all matter/client/citation memory (ChromaDB)
 ├── config.json                      ← your settings (AI provider · jurisdiction · prefs)
 ├── calendars/                       ← generated .ics feeds for iPhone/Outlook subscribe
@@ -309,10 +309,10 @@ When a new version of AI Brain — UK is published, you pull it in with **one co
 ### Path 1 — Plain terminal
 
 ```
-ailawfirm-uk update
+aibrain-uk update
 ```
 
-Under the hood this runs `pip install --upgrade git+https://github.com/Wolfgangrush/ai-brain-uk.git`. After it finishes, restart any open `ailawfirm-uk` session so the new skills + prompts load.
+Under the hood this runs `pip install --upgrade git+https://github.com/Wolfgangrush/ai-brain-uk.git`. After it finishes, restart any open `aibrain-uk` session so the new skills + prompts load.
 
 ### Path 2 — Inside Claude Code
 
@@ -332,7 +332,7 @@ Type:
 /update
 ```
 
-Same outcome — Gemini calls `ailawfirm-uk update` for you.
+Same outcome — Gemini calls `aibrain-uk update` for you.
 
 ### When to update
 
@@ -344,7 +344,7 @@ Same outcome — Gemini calls `ailawfirm-uk update` for you.
 
 - Your matter folders (`~/Desktop/<your-firm>/<matter>/...`)
 - Your project-root `CLAUDE.md` (your customisations always win)
-- Your `~/.ailawfirm-uk/` config + palace data
+- Your `~/.aibrain-uk/` config + palace data
 - Your chosen AI model setup (Ollama · DeepSeek · Claude · Gemini)
 
 Only the firm's installed Python code, skills, and template files refresh. Your practice is unaffected.
@@ -354,7 +354,7 @@ Only the firm's installed Python code, skills, and template files refresh. Your 
 If a new version updates the template `CLAUDE.md` (the firm's standing rules), your project-root `CLAUDE.md` is preserved because your customisations always win. To see what changed in the template after an update:
 
 ```
-diff CLAUDE.md "$(python3 -c 'import ailawfirm_uk, os; print(os.path.join(os.path.dirname(ailawfirm_uk.__file__), "templates/CLAUDE.md"))')"
+diff CLAUDE.md "$(python3 -c 'import aibrain_uk, os; print(os.path.join(os.path.dirname(aibrain_uk.__file__), "templates/CLAUDE.md"))')"
 ```
 
 Review the diff and merge what you want into your own `CLAUDE.md`.
@@ -369,7 +369,7 @@ Review the diff and merge what you want into your own `CLAUDE.md`.
 
 - **v0.1.0** *(shipped)* — bootstrap: architecture, brain layer with 10-intent classifier, 7 specialist agents (4 live · 3 stubs), 3 working MCP tools (court · citation · calendar), 4-language onboarding (English · Welsh · Scottish Gaelic · Irish), connect-local one-command CLI, LEGAL_EXPOSURE_PLAYBOOK v0.1 compliance
 - **v0.2 — knowledge layer** *(shipped 2026-05-28)* — **107 drafting templates** in `_drafting_data/` covering: (a) Tier-1 + Tier-2 contracts and pleadings (9+19) — sale of goods · services · employment · NDA · tenancy · commercial lease · shareholders · loan · settlement · N1 · particulars · defence + counterclaim · reply · witness statement · N244 · summary judgment · strike-out · statement of truth · ET1 · letter before claim · consent · Tomlin · Part 36 · Form Precedent H · bill of costs · retainer · statutory demand · N434; (b) Tier-3 specialist (8) — Family Form A + C100 + statement-in-support · Criminal basis of plea + defence statement + bail · Land Registry TR1 + AP1; (c) full 13-category litigation backbone (62 templates) — appeals · injunctions · disclosure (PD 57AD) · expert evidence (CPR Part 35) · default judgment · enforcement (HCEO · charging order · TPDO · attachment of earnings · writ of control) · skeleton arguments · counsel briefing · judicial review (N461) · trial documentation (PD 57AC) · ADR · insolvency (winding-up · administration · IVA) · specialist tribunals (Tax FTT/UT · Immigration · Property Chamber); (d) 6 procedural-anchor index files (CPR PDs · CrimPR PDs · FPR PDs · Pre-Action Protocols · Court Guides · Costs CPR 44-47); (e) 3 style guides (drafting · OSCOLA citation · formatting per PD 5A — expanded with bundles + PD 57AC + electronic filing). **Plus 10 statute digests** in `_statute_corpus/` (Companies Act 2006 · DPA 2018 + UK GDPR · Consumer Rights Act 2015 · Employment Rights Act 1996 · Equality Act 2010 · CPR 1998 · Solicitors Regulation + LSA 2007 · Data (Use and Access) Act 2025).
-- **v0.1.1 — Pseudonymisation Gateway** *(shipped 2026-05-29)* — internalised at `ailawfirm_uk/pseudonymisation.py`; sanitises PII before any cloud-LLM call. Standalone source at [pseudonymisation-gateway](https://github.com/Wolfgangrush/pseudonymisation-gateway).
+- **v0.1.1 — Pseudonymisation Gateway** *(shipped 2026-05-29)* — internalised at `aibrain_uk/pseudonymisation.py`; sanitises PII before any cloud-LLM call. Standalone source at [pseudonymisation-gateway](https://github.com/Wolfgangrush/pseudonymisation-gateway).
 - **v0.2 — frontend / UX layer** *(in progress)* — matter dashboard · section-by-section statute depth for Tier-2 statutes (Limitation Act · POCA · Bribery Act · ECCTA 2023) · SRA Code + BSB Handbook deep digests
 - **v0.3** *(following milestone)* — **firm mode** for multi-solicitor practices · role/permission · matter assignment · conflict-check (SRA Rule 6.5) · client-account compliance (SRA Accounts Rules)
 - **v0.4+** — BAILII / Westlaw-public / Lexis-public cross-reference · Apple EventKit native · CalDAV bidirectional sync · deeper Scottish + NI jurisdiction-specific modules · sectoral specialisms (construction · IP licensing · admiralty · medical-disciplinary)

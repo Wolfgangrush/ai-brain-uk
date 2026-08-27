@@ -2,7 +2,7 @@
 
 import json
 
-from ailawfirm_uk.mcp_server import TOOLS, handle_request
+from aibrain_uk.mcp_server import TOOLS, handle_request
 
 
 class TestMCPServerSmoke:
@@ -25,7 +25,7 @@ class TestMCPServerSmoke:
         response = handle_request({"method": "initialize", "params": {}, "id": 1})
         assert response is not None
         result = response["result"]
-        assert result["serverInfo"]["name"] == "ailawfirm-uk"
+        assert result["serverInfo"]["name"] == "aibrain-uk"
         assert result["protocolVersion"] == "2024-11-05"
 
     def test_tools_list_includes_uk_tools(self):

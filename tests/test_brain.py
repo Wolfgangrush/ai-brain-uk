@@ -1,6 +1,6 @@
-from ailawfirm_uk.brain.intents import Intent
-from ailawfirm_uk.brain.classifier import classify
-from ailawfirm_uk.brain.router import route
+from aibrain_uk.brain.intents import Intent
+from aibrain_uk.brain.classifier import classify
+from aibrain_uk.brain.router import route
 
 
 class TestClassifier:

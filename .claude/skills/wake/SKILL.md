@@ -37,9 +37,9 @@ If either pass fails, display warning before proceeding.
 ### Step 2: System state check
 ```bash
 echo "Python: $(python3 --version 2>&1)"
-echo "Package: $(pip show ailawfirm_uk 2>&1 | head -3)"
-echo "Data dir: $(ls -la ~/.ailawfirm-uk/ 2>&1 | head -5)"
-echo "Config: $(cat ~/.ailawfirm-uk/config.json 2>&1 | head -10)"
+echo "Package: $(pip show aibrain_uk 2>&1 | head -3)"
+echo "Data dir: $(ls -la ~/.aibrain-uk/ 2>&1 | head -5)"
+echo "Config: $(cat ~/.aibrain-uk/config.json 2>&1 | head -10)"
 ```
 
 ### Step 3: Jurisdiction context
@@ -71,8 +71,8 @@ Display the UK-specific legal framework:
 
 **System:**
 - Python: [version]
-- Package: ailawfirm_uk [version]
-- Data: ~/.ailawfirm-uk/ [status]
+- Package: aibrain_uk [version]
+- Data: ~/.aibrain-uk/ [status]
 
 **7 specialists online.**
 **UK Supreme Court + EWCA + High Court + Court of Session mapped.**

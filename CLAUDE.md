@@ -21,7 +21,7 @@ need, an SRA / BSB / UK GDPR / compliance question, or any matter lookup — **M
 local brain**, never answered from your own model knowledge:
 
 ```
-python3 -m ailawfirm_uk ask "<the solicitor's question, verbatim>"
+python3 -m aibrain_uk ask "<the solicitor's question, verbatim>"
 ```
 
 Then relay what the brain returns, in plain warm language. The brain is **AI-backed** — it uses the very
@@ -40,7 +40,7 @@ Always keep the caution: *"AI can be wrong — please verify before you rely on 
 Run this once, and show him the output:
 
 ```
-python3 -m ailawfirm_uk reception
+python3 -m aibrain_uk reception
 ```
 
 That boots the brain, verifies the specialists are online, turns on retrospective memory, shows the
@@ -70,7 +70,7 @@ Every exchange is logged locally (offline, on this machine only). If he asks "wh
 "remind me", or "recap", run:
 
 ```
-python3 -m ailawfirm_uk recap
+python3 -m aibrain_uk recap
 ```
 
 and relay it warmly.

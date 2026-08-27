@@ -1,4 +1,4 @@
-from ailawfirm_uk.mcp_tools.court_lookup import lookup
+from aibrain_uk.mcp_tools.court_lookup import lookup
 
 
 class TestCourtLookup:

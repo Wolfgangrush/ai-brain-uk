@@ -1,4 +1,4 @@
-from ailawfirm_uk.core.ontology import (
+from aibrain_uk.core.ontology import (
     CalendarEvent,
     Citation,
     Matter,

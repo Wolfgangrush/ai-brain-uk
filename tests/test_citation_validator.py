@@ -1,4 +1,4 @@
-from ailawfirm_uk.mcp_tools.citation_validator import validate
+from aibrain_uk.mcp_tools.citation_validator import validate
 
 
 class TestCitationValidator:

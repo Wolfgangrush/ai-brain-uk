@@ -27,8 +27,8 @@ cd ai-law-firm-uk
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -e .
-ailawfirm-uk init
-ailawfirm-uk status
+aibrain-uk init
+aibrain-uk status
 ```
 
 Faic [MAC_INSTALL.md](MAC_INSTALL.md) airson stiùireadh mionaideach.
@@ -41,7 +41,7 @@ cd ai-law-firm-uk
 python -m venv .venv
 .venv\Scripts\activate
 pip install -e .
-ailawfirm-uk init
+aibrain-uk init
 ```
 
 Faic [WINDOWS_INSTALL.md](WINDOWS_INSTALL.md).
@@ -53,7 +53,7 @@ git clone https://github.com/Wolfgangrush/ai-brain-uk.git
 cd ai-law-firm-uk
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e .
-ailawfirm-uk init
+aibrain-uk init
 ```
 
 ## Innealan MCP (3)
@@ -75,7 +75,7 @@ Tha an `compliance_agent` a' comharrachadh:
 
 ## Dìomhaireachd
 
-Bidh a h-uile càil a' ruith gu h-ionadail. Gun telemetry. Gun sgòth. Fuirichidh an dàta luchd-dèiligidh agad ann an `~/.ailawfirm-uk/palace/`.
+Bidh a h-uile càil a' ruith gu h-ionadail. Gun telemetry. Gun sgòth. Fuirichidh an dàta luchd-dèiligidh agad ann an `~/.aibrain-uk/palace/`.
 
 ## Ceadachas
 

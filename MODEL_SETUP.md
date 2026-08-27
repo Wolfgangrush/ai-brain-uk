@@ -35,7 +35,7 @@ No API key required. The brain classifier uses keyword matching. MCP tools run e
 export ANTHROPIC_API_KEY="sk-ant-..."
 ```
 
-Configure in `~/.ailawfirm-uk/config.json`:
+Configure in `~/.aibrain-uk/config.json`:
 ```json
 {
   "llm_provider": "anthropic",

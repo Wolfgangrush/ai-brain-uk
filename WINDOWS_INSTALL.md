@@ -41,15 +41,15 @@ pip install -e .
 ### 5. Initialize
 
 ```powershell
-ailawfirm-uk init
+aibrain-uk init
 ```
 
-This creates `%USERPROFILE%\.ailawfirm-uk\` with default config.
+This creates `%USERPROFILE%\.aibrain-uk\` with default config.
 
 ### 6. Verify
 
 ```powershell
-ailawfirm-uk status
+aibrain-uk status
 ```
 
 ## Outlook Calendar Integration
@@ -59,7 +59,7 @@ The calendar sync tool generates `.ics` files. To import into Outlook:
 1. Open **Outlook**
 2. **File → Open & Export → Import/Export**
 3. Select **Import an iCalendar (.ics) file**
-4. Browse to `%USERPROFILE%\.ailawfirm-uk\calendar.ics`
+4. Browse to `%USERPROFILE%\.aibrain-uk\calendar.ics`
 5. Choose **Open as New** or **Import**
 
 ## MCP Setup with Claude Code
@@ -68,9 +68,9 @@ Add to your MCP configuration:
 ```json
 {
   "mcpServers": {
-    "ailawfirm-uk": {
+    "aibrain-uk": {
       "command": "python",
-      "args": ["-m", "ailawfirm_uk.mcp_server"]
+      "args": ["-m", "aibrain_uk.mcp_server"]
     }
   }
 }

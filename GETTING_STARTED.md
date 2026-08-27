@@ -41,10 +41,10 @@ source .venv/bin/activate
 pip install -e .
 
 # 4. Initialize
-ailawfirm-uk init
+aibrain-uk init
 
 # 5. Verify
-ailawfirm-uk status
+aibrain-uk status
 ```
 
 See [MAC_INSTALL.md](MAC_INSTALL.md) for detailed macOS instructions including Homebrew prerequisites.
@@ -57,8 +57,8 @@ cd ai-law-firm-uk
 python -m venv .venv
 .venv\Scripts\activate
 pip install -e .
-ailawfirm-uk init
-ailawfirm-uk status
+aibrain-uk init
+aibrain-uk status
 ```
 
 See [WINDOWS_INSTALL.md](WINDOWS_INSTALL.md) for detailed Windows instructions.
@@ -70,8 +70,8 @@ git clone https://github.com/Wolfgangrush/ai-brain-uk.git
 cd ai-law-firm-uk
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e .
-ailawfirm-uk init
-ailawfirm-uk status
+aibrain-uk init
+aibrain-uk status
 ```
 
 ---
@@ -103,9 +103,9 @@ Add to your MCP configuration:
 ```json
 {
   "mcpServers": {
-    "ailawfirm-uk": {
+    "aibrain-uk": {
       "command": "python3",
-      "args": ["-m", "ailawfirm_uk.mcp_server"]
+      "args": ["-m", "aibrain_uk.mcp_server"]
     }
   }
 }
@@ -123,7 +123,7 @@ The brain's classifier runs locally on keyword matching. For advanced intent cla
 
 ## Calendar Setup
 
-The `uk_calendar_sync` tool generates `.ics` files in `~/.ailawfirm-uk/calendar.ics`. Open this file in:
+The `uk_calendar_sync` tool generates `.ics` files in `~/.aibrain-uk/calendar.ics`. Open this file in:
 
 - **macOS Calendar.app:** File → Import → select `calendar.ics`
 - **Outlook (macOS/Windows):** File → Import → select `calendar.ics`
@@ -153,7 +153,7 @@ The calendar auto-refreshes on each sync. Timezone defaults to Europe/London wit
 
 ```
 ai-law-firm-uk/
-├── ailawfirm_uk/
+├── aibrain_uk/
 │   ├── core/           # Shared legal domain (courts, citations, statutes, ontology)
 │   │   └── calendar/   # ICS sync
 │   ├── solo/           # Solo practitioner modules (v0.2+)
@@ -185,7 +185,7 @@ ai-law-firm-uk/
 ## Privacy & Data
 
 - Everything runs locally. No telemetry. No analytics. No cloud.
-- Your client data stays in `~/.ailawfirm-uk/palace/` (ChromaDB).
+- Your client data stays in `~/.aibrain-uk/palace/` (ChromaDB).
 - Calendar data stays in local `.ics` files.
 - entity aliasing substitutes real names in calendar summaries for lock-screen safety.
 

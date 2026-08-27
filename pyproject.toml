@@ -3,7 +3,7 @@ requires = ["setuptools>=64"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "ailawfirm_uk"
+name = "aibrain_uk"
 version = "0.1.0"
 description = "AI Brain — UK Solo edition. Practice OS for UK solo solicitors and barristers. Built on local memory architecture."
 readme = "README.md"
@@ -41,13 +41,13 @@ Repository = "https://github.com/Wolfgangrush/ai-brain-uk"
 "Upstream Engine" = "https://github.com/Wolfgangrush"
 
 [tool.setuptools.packages.find]
-include = ["ailawfirm_uk*"]
+include = ["aibrain_uk*"]
 
 [tool.setuptools.package-data]
-ailawfirm_uk = ["templates/*.md", "templates/*.toml"]
+aibrain_uk = ["templates/*.md", "templates/*.toml"]
 
 [project.scripts]
-ailawfirm-uk = "ailawfirm_uk:main"
+aibrain-uk = "aibrain_uk:main"
 
 [project.optional-dependencies]
 dev = ["pytest>=7.0", "build>=1.0", "twine>=4.0"]

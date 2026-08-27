@@ -27,8 +27,8 @@ cd ai-law-firm-uk
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -e .
-ailawfirm-uk init
-ailawfirm-uk status
+aibrain-uk init
+aibrain-uk status
 ```
 
 Gweler [MAC_INSTALL.md](MAC_INSTALL.md) am gyfarwyddiadau manwl.
@@ -41,7 +41,7 @@ cd ai-law-firm-uk
 python -m venv .venv
 .venv\Scripts\activate
 pip install -e .
-ailawfirm-uk init
+aibrain-uk init
 ```
 
 Gweler [WINDOWS_INSTALL.md](WINDOWS_INSTALL.md).
@@ -53,7 +53,7 @@ git clone https://github.com/Wolfgangrush/ai-brain-uk.git
 cd ai-law-firm-uk
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e .
-ailawfirm-uk init
+aibrain-uk init
 ```
 
 ## Offer MCP (3)
@@ -75,7 +75,7 @@ Mae'r `compliance_agent` yn banel gweinyddol allweddair sy'n baneri:
 
 ## Preifatrwydd
 
-Mae popeth yn rhedeg yn lleol. Dim telemetreg. Dim cwmwl. Mae eich data cleient yn aros yn `~/.ailawfirm-uk/palace/`.
+Mae popeth yn rhedeg yn lleol. Dim telemetreg. Dim cwmwl. Mae eich data cleient yn aros yn `~/.aibrain-uk/palace/`.
 
 ## Trwydded
 

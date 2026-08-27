@@ -9,8 +9,8 @@ Locks two things that were broken:
 
 import json
 
-from ailawfirm_uk.pseudonymisation import PseudonymisationGateway
-from ailawfirm_uk.brain import llm
+from aibrain_uk.pseudonymisation import PseudonymisationGateway
+from aibrain_uk.brain import llm
 
 
 def test_context_anchored_client_name_is_masked():
